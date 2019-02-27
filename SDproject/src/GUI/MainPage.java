@@ -1,21 +1,19 @@
 package GUI;
 
 import java.awt.EventQueue;
+import java.awt.SystemColor;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumn;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Component;
-import javax.swing.ScrollPaneConstants;
-import java.awt.Color;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.SystemColor;
 
 public class MainPage extends JFrame {
 	private Border lineBorder;
@@ -186,16 +184,16 @@ public class MainPage extends JFrame {
 		                switch (j)  
 		                {  
 		                case 0:  
-		                    obj[i][j] = "ÕÔ¿ïÒå";  
+		                    obj[i][j] = "èµµåŒ¡ä¹‰";  
 		                    break;  
 		                case 1:  
 		                    obj[i][j] = "123215";  
 		                    break;  
 		                case 2:  
-		                    obj[i][j] = "ÄĞ";  
+		                    obj[i][j] = "ç”·";  
 		                    break;  
 		                case 3:  
-		                    obj[i][j] = "Á½Äê";  
+		                    obj[i][j] = "ä¸¤å¹´";  
 		                    break;  
 		            
 		                }  
@@ -208,23 +206,23 @@ public class MainPage extends JFrame {
 		        
 		        
 		        /* 
-		         * ÉèÖÃJTable×Ô¶¯µ÷ÕûÁĞ±íµÄ×´Ì¬£¬´Ë´¦ÉèÖÃÎª¹Ø±Õ 
+		         * è®¾ç½®JTableè‡ªåŠ¨è°ƒæ•´åˆ—è¡¨çš„çŠ¶æ€ï¼Œæ­¤å¤„è®¾ç½®ä¸ºå…³é—­ 
 		         */  
 		          
-		        /*ÓÃJScrollPane×°ÔØJTable£¬ÕâÑù³¬³ö·¶Î§µÄÁĞ¾Í¿ÉÒÔÍ¨¹ı¹ö¶¯ÌõÀ´²é¿´*/  
+		        /*ç”¨JScrollPaneè£…è½½JTableï¼Œè¿™æ ·è¶…å‡ºèŒƒå›´çš„åˆ—å°±å¯ä»¥é€šè¿‡æ»šåŠ¨æ¡æ¥æŸ¥çœ‹*/  
 		        
 		    	TableColumn column = null;  
 		        for(int i = 0; i < colunms; i++)  
 		        {  
 		            column = table_2.getColumnModel().getColumn(i);  
-		            /*½«Ã¿Ò»ÁĞµÄÄ¬ÈÏ¿í¶ÈÉèÖÃÎª100*/  
+		            /*å°†æ¯ä¸€åˆ—çš„é»˜è®¤å®½åº¦è®¾ç½®ä¸º100*/  
 		            column.setPreferredWidth(100);  
 		        }  
 				
 				JScrollPane scroll2 = new JScrollPane(table_2, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 						ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				
-				scroll2.setBounds(36, 189, 400, 256);
+				scroll2.setBounds(22, 193, 400, 256);
 				contentPane.add(scroll2);
 	}
 	
@@ -240,16 +238,16 @@ public class MainPage extends JFrame {
 	                switch (j)  
 	                {  
 	                case 0:  
-	                    obj[i][j] = "ÕÔ¿ïÒå";  
+	                    obj[i][j] = "èµµåŒ¡ä¹‰";  
 	                    break;  
 	                case 1:  
 	                    obj[i][j] = "123215";  
 	                    break;  
 	                case 2:  
-	                    obj[i][j] = "ÄĞ";  
+	                    obj[i][j] = "ç”·";  
 	                    break;  
 	                case 3:  
-	                    obj[i][j] = "Á½Äê";  
+	                    obj[i][j] = "ä¸¤å¹´";  
 	                    break;  
 	                }  
 	            }  
@@ -257,18 +255,17 @@ public class MainPage extends JFrame {
 	        
 			JTable table_1 = new JTable(obj, columnNames);
 			int colunms = table_1.getColumnCount();  
-	        
 	        /* 
-	         * ÉèÖÃJTable×Ô¶¯µ÷ÕûÁĞ±íµÄ×´Ì¬£¬´Ë´¦ÉèÖÃÎª¹Ø±Õ 
+	         * è®¾ç½®JTableè‡ªåŠ¨è°ƒæ•´åˆ—è¡¨çš„çŠ¶æ€ï¼Œæ­¤å¤„è®¾ç½®ä¸ºå…³é—­ 
 	         */  
 	          
-	        /*ÓÃJScrollPane×°ÔØJTable£¬ÕâÑù³¬³ö·¶Î§µÄÁĞ¾Í¿ÉÒÔÍ¨¹ı¹ö¶¯ÌõÀ´²é¿´*/  
+	        /*ç”¨JScrollPaneè£…è½½JTableï¼Œè¿™æ ·è¶…å‡ºèŒƒå›´çš„åˆ—å°±å¯ä»¥é€šè¿‡æ»šåŠ¨æ¡æ¥æŸ¥çœ‹*/  
 	        
 	    	TableColumn column = null;  
 	        for(int i = 0; i < colunms; i++)  
 	        {  
 	            column = table_1.getColumnModel().getColumn(i);  
-	            /*½«Ã¿Ò»ÁĞµÄÄ¬ÈÏ¿í¶ÈÉèÖÃÎª100*/  
+	            /*å°†æ¯ä¸€åˆ—çš„é»˜è®¤å®½åº¦è®¾ç½®ä¸º100*/  
 	            column.setPreferredWidth(100);  
 	        }  
 	        
