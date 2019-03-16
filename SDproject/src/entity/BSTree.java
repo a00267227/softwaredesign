@@ -1,5 +1,9 @@
 package entity;
 
+import java.text.DecimalFormat;
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class BSTree {
 	private Node head;
 	private Node tail;
@@ -61,4 +65,42 @@ public class BSTree {
 		return tree;
 
 	}
+
+	public Node preSearch(int key) {
+		Queue<Node> queue = new LinkedList<Node>();
+		queue.add(this.head);
+		while (!queue.isEmpty()) {
+			Node cur = queue.poll();
+			int temp = cur.readKey();
+			if (cur.left != null) {
+				if(temp==key) return cur;
+				queue.add(cur.left);
+			}
+			if (cur.right != null) {
+				if(temp==key) return cur;
+				queue.add(cur.right);
+			}
+		}
+		return null;
+	}
+	
+	public String inSearchAvgAge() {
+		double sum = 0;
+		Queue<Node> queue = new LinkedList<Node>();
+		queue.add(this.head);
+		Node cur = queue.poll();
+		while(!queue.isEmpty() || cur != null) {
+			while(cur != null) {
+				sum += cur.readAge();
+				queue.add(cur);
+				cur = cur.left;
+			}
+			Node last = queue.poll();
+			cur = last.right;
+		}
+		DecimalFormat df = new DecimalFormat("#.00");
+		return df.format(sum/this.readNodeNum());
+	}
+	
+	
 }

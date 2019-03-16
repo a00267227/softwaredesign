@@ -22,7 +22,7 @@ import entity.Person;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ItemBook extends JFrame {
+public class HashTableBook extends JFrame {
 	private Border lineBorder;
 	private JPanel contentPane;
 	private JTextField textField_04;
@@ -40,7 +40,7 @@ public class ItemBook extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ItemBook frame = new ItemBook();
+					HashTableBook frame = new HashTableBook();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +52,7 @@ public class ItemBook extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ItemBook() {
+	public HashTableBook() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1089, 637);
 		contentPane = new JPanel();
