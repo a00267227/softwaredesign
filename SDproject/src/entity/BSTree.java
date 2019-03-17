@@ -14,12 +14,13 @@ public class BSTree {
 	public BSTree() {
 		tree = this;
 		tail = new Node(0, null, 0, 't', null, null);
-		head = new Node(-1, null, 0, 't', null, tail);
+		head = new Node(-1, "head", 0, 'N', null, tail);
 		nodeNum = 0;
 		created = true;
 	}
 
-	public void insert(int k, String nm, int a, char g) {
+	public int insert(int k, String nm, int a, char g) {
+		int step = 0;
 		Node p, x;
 		nodeNum++;
 		p = head;
@@ -27,13 +28,20 @@ public class BSTree {
 		while (x != tail) {
 			p = x;
 			x = (k < x.key) ? x.left : x.right;
+			step++;
 		}
 		x = new Node(k, nm, a, g, tail, tail);
-		if (k < p.key)
-			p.left = x;
-		else
+		if(step == 0) {
 			p.right = x;
+		}else {
+			if (k < p.key)
+				p.left = x;
+			else
+				p.right = x;
+		}
+		step++;
 		System.out.println("Insert successfully");
+		return step;
 	}
 
 	public Node search(int k) {

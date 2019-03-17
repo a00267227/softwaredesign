@@ -2,6 +2,8 @@ package GUI;
 
 import java.awt.EventQueue;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,10 +22,6 @@ import entity.BSTree;
 import entity.Node;
 import entity.Person;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-
 public class BinaryTreeBook extends JFrame {
 	private Border lineBorder;
 	private JPanel contentPane;
@@ -33,11 +31,13 @@ public class BinaryTreeBook extends JFrame {
 	private JTextField IdField;
 	private JTable table_1;
 	private BSTree tree = BSTree.getInstance();
-	private int current = 0; // This is new
 	private JTextField amountField;
 	private JTextField AvgAgeField;
-	private JTextField textField;
-	private JTextField searchIdField;
+	private JTextField insertStep;
+	private int []keyArray = new int[20];
+	private int count = 0;
+	private JTextField idField2;
+	private JTextField iteratorField;
 
 	/**
 	 * Launch the application.
@@ -109,17 +109,19 @@ public class BinaryTreeBook extends JFrame {
 				String age = textField_03.getText();
 				String gender = textField_04.getText();
 				Person p = new Person(name, Integer.parseInt(age), gender.charAt(0));
-				tree.insert(Integer.parseInt(id), name, Integer.parseInt(age), gender.charAt(0));
+				int steps = tree.insert(Integer.parseInt(id), name, Integer.parseInt(age), gender.charAt(0));
+				insertStep.setText(""+steps);
+				keyArray[count] = Integer.parseInt(id);
+				count++;
 				setTable();
 			}
 		});
 		button_2.setBounds(287, 18, 92, 36);
 		panel.add(button_2);
 
-		tree.insert(0, "J.Smith", 22, 'M');
+		/*tree.insert(0, "J.Smith", 22, 'M');
 		tree.insert(1, "T.Black", 24, 'M');
-		tree.insert(2, "M.Gray", 24, 'M');
-
+		tree.insert(2, "M.Gray", 24, 'M');*/
 		IdField = new JTextField();
 		IdField.setColumns(10);
 		IdField.setBounds(154, 18, 121, 25);
@@ -133,36 +135,44 @@ public class BinaryTreeBook extends JFrame {
 		label.setBounds(20, 152, 106, 25);
 		panel.add(label);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(154, 152, 121, 25);
-		panel.add(textField);
+		insertStep = new JTextField();
+		insertStep.setBackground(SystemColor.menu);
+		insertStep.setEditable(false);
+		insertStep.setColumns(10);
+		insertStep.setBounds(154, 152, 121, 25);
+		panel.add(insertStep);
 		setTable();
 
 	}
 
 	public void setTable() {
 		Object[][] obj = new Object[tree.readNodeNum()][6];
-		for (int i = 0; i < tree.readNodeNum(); i++) {
-			for (int j = 0; j < 6; j++) {
-				switch (j) {
-				case 0:
-					obj[i][j] = tree.search(i).readKey();
-					break;
-				case 1:
-					obj[i][j] = tree.search(i).readName();
-					break;
-				case 2:
-					obj[i][j] = tree.search(i).readGender();
-					break;
-				case 3:
-					obj[i][j] = tree.search(i).readAge();
-					break;
+		if(tree.readNodeNum() == 0) {
+			
+		}else {
+			for (int i = 0; i < tree.readNodeNum(); i++) {
+				for (int j = 0; j < 6; j++) {
+					switch (j) {
+					case 0:
+						obj[i][j] = tree.search(keyArray[i]).readKey();
+						break;
+					case 1:
+						obj[i][j] = tree.search(keyArray[i]).readName();
+						break;
+					case 2:
+						obj[i][j] = tree.search(keyArray[i]).readGender();
+						break;
+					case 3:
+						obj[i][j] = tree.search(keyArray[i]).readAge();
+						break;
+					}
 				}
 			}
 		}
+		
 		String[] columnNames = { "Id", "Name", "Gender", "Age" };
 		table_1 = new JTable(obj, columnNames);
+		table_1.setBackground(SystemColor.menu);
 		int colunms = table_1.getColumnCount();
 		TableColumn column = null;
 		for (int i = 0; i < colunms; i++) {
@@ -178,7 +188,7 @@ public class BinaryTreeBook extends JFrame {
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBorder(BorderFactory.createTitledBorder(lineBorder, "Iterator"));
-		panel_1.setBackground(Color.WHITE);
+		panel_1.setBackground(SystemColor.menu);
 		panel_1.setBounds(497, 329, 400, 63);
 		contentPane.add(panel_1);
 		
@@ -203,7 +213,7 @@ public class BinaryTreeBook extends JFrame {
 		JPanel panel_3 = new JPanel();
 		panel_3.setLayout(null);
 		panel_3.setBorder(BorderFactory.createTitledBorder(lineBorder, "Iterator"));
-		panel_3.setBackground(Color.WHITE);
+		panel_3.setBackground(SystemColor.menu);
 		panel_3.setBounds(497, 422, 400, 63);
 		contentPane.add(panel_3);
 		
@@ -228,22 +238,36 @@ public class BinaryTreeBook extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setBorder(BorderFactory.createTitledBorder(lineBorder, "Iterator"));
-		panel.setBackground(Color.WHITE);
-		panel.setBounds(497, 35, 400, 63);
+		panel.setBackground(SystemColor.menu);
+		panel.setBounds(497, 35, 400, 88);
 		contentPane.add(panel);
 		
-		searchIdField = new JTextField();
-		searchIdField.setColumns(10);
-		searchIdField.setBounds(157, 16, 121, 25);
-		panel.add(searchIdField);
+		JLabel lblId = new JLabel("ID");
+		lblId.setBounds(20, 21, 81, 25);
+		panel.add(lblId);
 		
-		JButton button = new JButton("Search");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(searchIdField.getText().length()==0) {
-					setTable();
-				}else {
-					Node nd = tree.search(Integer.parseInt(searchIdField.getText()));
+		idField2 = new JTextField();
+		idField2.setBounds(155, 20, 121, 28);
+		panel.add(idField2);
+		idField2.setColumns(10);
+		
+		iteratorField = new JTextField();
+		iteratorField.setEditable(false);
+		iteratorField.setColumns(10);
+		iteratorField.setBackground(SystemColor.menu);
+		iteratorField.setBounds(155, 53, 121, 25);
+		panel.add(iteratorField);
+		
+		JLabel label_1 = new JLabel("num of steps");
+		label_1.setBounds(21, 53, 106, 25);
+		panel.add(label_1);
+		
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println(idField2.getText());
+				if(idField2.getText().length()!=0) {
+					Node nd = tree.search(Integer.parseInt(idField2.getText()));
 					Object[][] obj = new Object[tree.readNodeNum()][6];
 								obj[0][0] = nd.readKey();
 								obj[0][1] = nd.readName();
@@ -262,16 +286,13 @@ public class BinaryTreeBook extends JFrame {
 					scrollPane.setBorder(BorderFactory.createTitledBorder(lineBorder, "Binarry Tree Storage"));
 					scrollPane.setBounds(72, 35, 400, 450);
 					contentPane.add(scrollPane);
+				}else {
+					setTable();
 				}
-				
 			}
 		});
-		button.setBounds(290, 12, 92, 36);
-		panel.add(button);
-		
-		JLabel label = new JLabel("id");
-		label.setBounds(64, 17, 81, 25);
-		panel.add(label);
+		btnSearch.setBounds(286, 22, 92, 36);
+		panel.add(btnSearch);
 		
 	}
 }
