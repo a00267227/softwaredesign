@@ -105,8 +105,8 @@ public class HashTableBook extends JFrame {
 				String name = textField_02.getText();
 				String age = textField_03.getText();
 				String gender = textField_04.getText();
-				Person p = new Person(name, Integer.parseInt(age), gender.charAt(0));
-				htable.insert(Integer.parseInt(id), p);
+				//Person p = new Person(name, Integer.parseInt(age), gender.charAt(0));
+				//htable.insert(Integer.parseInt(id), p);
 				setTable();
 			}
 		});
@@ -121,13 +121,13 @@ public class HashTableBook extends JFrame {
 		button_4.setBounds(391, 157, 174, 36);
 		panel.add(button_4);
 
-		Person p1 = new Person("J.Smith", 22, 'M');
+	/*	Person p1 = new Person("J.Smith", 22, 'M');
 		Person p3 = new Person("J.Smith", 22, 'M');
 		Person p2 = new Person("J.Smith", 22, 'M');
 
 		htable.insert(0, p1);
 		htable.insert(1, p2);
-		htable.insert(2, p3);
+		htable.insert(2, p3);*/
 
 		textField_01 = new JTextField();
 		textField_01.setColumns(10);

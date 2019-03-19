@@ -19,7 +19,7 @@ public class HNode {
 	}
 
 	public HNode(int k, Person p) {
-		person = new Person(p.getName(),p.getAge(),p.getGender());
+		person = new Person(p.getName(),""+p.getAge(),""+p.getGender());
 		key = k;
 	}
 
@@ -27,11 +27,5 @@ public class HNode {
 		return key;
 	}
 
-	public String readName() {
-		return name;
-	}
-
-	public int readAge() {
-		return age;
-	}
+	
 }

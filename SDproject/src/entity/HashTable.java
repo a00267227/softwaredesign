@@ -1,20 +1,29 @@
 package entity;
 
-public class HashTable {
+public class HashTable implements MyIterator,Iterator{
+	public int getTemp() {
+		return temp;
+	}
+
+	public void setTemp(int temp) {
+		this.temp = temp;
+	}
+
 	private int nodeNum;
 	private static boolean created = false;
 	private static HashTable table;
-
+	private int keyarr[] = new int[25];
+	int temp = 0;
 	public int hash(int id) {
-		return id % 20;
+		return id % 25;
 	}
 
-	private HNode[] head = new HNode[20];
+	private HNode[] head = new HNode[25];
 
 	public HashTable() {
 		nodeNum = 0;
 		table = this;
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 25; i++)
 			head[i] = null;
 	}
 
@@ -23,6 +32,7 @@ public class HashTable {
 		int index = hash(k);
 		temp.next = head[index];
 		head[index] = temp;
+		keyarr[nodeNum] = k;
 		nodeNum++;
 	}
 
@@ -50,5 +60,22 @@ public class HashTable {
 		}
 		return table;
 
+	}
+
+	@Override
+	public boolean hasNext() {
+		return temp-1<nodeNum;
+	}
+
+	@Override
+	public Object next() {
+		HNode no =head[keyarr[temp]];
+		temp++;
+		return no;
+	}
+
+	@Override
+	public Iterator iterator() {
+		return this;
 	}
 }

@@ -1,10 +1,10 @@
 package entity;
 
 public class Person {
-	public Person(String name2, int age2, char gender2) {
+	public Person(String name2, String age2, String gender2) {
 		this.name = name2;
-		this.age = age2;
-		this.gender = gender2;
+		this.age = Integer.parseInt(age2);
+		this.gender = gender2.charAt(0);
 	}
 
 

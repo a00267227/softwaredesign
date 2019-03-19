@@ -1,15 +1,29 @@
 package entity;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
-public class BSTree {
+public class BSTree implements MyIterator,Iterator{
+	public int getCursor() {
+		return cursor;
+	}
+
+	public void setCursor(int cursor) {
+		this.cursor = cursor;
+	}
+
 	private Node head;
 	private Node tail;
 	private int nodeNum;
 	private static boolean created = false;
 	private static BSTree tree;
+	private int cursor = -1;
+	int temp = 0;
+	boolean flag = false;
+	private List nodes = new ArrayList<Node>(50);
 
 	public BSTree() {
 		tree = this;
@@ -17,6 +31,7 @@ public class BSTree {
 		head = new Node(-1, "head", 0, 'N', null, tail);
 		nodeNum = 0;
 		created = true;
+		nodes.add(head);
 	}
 
 	public int insert(int k, String nm, int a, char g) {
@@ -39,6 +54,7 @@ public class BSTree {
 			else
 				p.right = x;
 		}
+		nodes.add(x);
 		step++;
 		System.out.println("Insert successfully");
 		return step;
@@ -61,6 +77,24 @@ public class BSTree {
 		else
 			return x;
 	}
+	
+	public int searchSteps(int k) {
+		int steps = 0;
+		Node x = head.right;
+		tail.key = k;
+		boolean found = false;
+		while (x != tail && found == false) {
+			steps++;
+			if (k == x.key)
+				found = true;
+			else if (k < x.key)
+				x = x.left;
+			else
+				x = x.right;
+		}
+		return steps;
+	}
+	
 
 	public int readNodeNum() {
 		return nodeNum;
@@ -108,6 +142,23 @@ public class BSTree {
 		}
 		DecimalFormat df = new DecimalFormat("#.00");
 		return df.format(sum/this.readNodeNum());
+	}
+
+	
+	@Override
+	public Iterator iterator() {
+		return this;
+	}
+
+	@Override
+	public boolean hasNext() {
+		return cursor+1<nodes.size();
+	}
+
+	@Override
+	public Object next() {
+		cursor++;
+		return nodes.get(cursor);
 	}
 	
 	

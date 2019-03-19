@@ -1,13 +1,13 @@
 
 class HashTable {
 	public int hash(int id) {
-		return id % 20;
+		return id % 25;
 	}
 
-	private HNode[] head = new HNode[20];
+	private HNode[] head = new HNode[25];
 
 	public HashTable() {
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 25; i++)
 			head[i] = null;
 	}
 
