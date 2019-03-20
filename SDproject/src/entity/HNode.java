@@ -1,31 +1,22 @@
 package entity;
 
 public class HNode {
+	int key;
+	HNode next;
+	Person person;
+
 	public Person getPerson() {
 		return person;
 	}
 
-	int key;
-	String name;
-	int age;
-	HNode next;
-	Person person;
-
-	HNode(int k, String nm, int a) {
-		key = k;
-		name = nm;
-		age = a;
-		next = null;
-	}
-
 	public HNode(int k, Person p) {
-		person = new Person(p.getName(),""+p.getAge(),""+p.getGender());
+		person = new Person(p.getName(), "" + p.getAge(), "" + p.getGender());
 		key = k;
+		next = null;
 	}
 
 	public int readKey() {
 		return key;
 	}
 
-	
 }

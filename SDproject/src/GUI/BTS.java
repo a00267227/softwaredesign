@@ -49,8 +49,6 @@ public class BTS extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BTS frame = new BTS();
-					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,8 +58,10 @@ public class BTS extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param menu 
 	 */
-	public BTS() {
+	public BTS(JFrame menu) {
+		super("Binary Tree Search Book");
 		lineBorder = BorderFactory.createEtchedBorder(15, Color.BLUE, Color.black);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,26 +84,31 @@ public class BTS extends JFrame {
 				System.out.println(IDField.getText());
 				if (IDField.getText().length() != 0) {
 					Node nd = tree.search(Integer.parseInt(IDField.getText()));
-					int step = tree.searchSteps(Integer.parseInt(IDField.getText()));
-					steps1.setText("" + step);
-					Object[][] obj = new Object[tree.readNodeNum()][6];
-					obj[0][0] = nd.readKey();
-					obj[0][1] = nd.readName();
-					obj[0][2] = nd.readGender();
-					obj[0][3] = nd.readAge();
-					String[] columnNames = { "Key", "Name", "Gender", "Age" };
-					table_1 = new JTable(obj, columnNames);
-					int colunms = table_1.getColumnCount();
-					TableColumn column = null;
-					for (int i = 0; i < colunms; i++) {
-						column = table_1.getColumnModel().getColumn(i);
-						column.setPreferredWidth(100);
+					if(nd == null) {
+						steps1.setText("Cannot Found");
+					}else {
+						int step = tree.searchSteps(Integer.parseInt(IDField.getText()));
+						steps1.setText("" + step);
+						Object[][] obj = new Object[tree.readNodeNum()][6];
+						obj[0][0] = nd.readKey();
+						obj[0][1] = nd.getPerson().getName();
+						obj[0][2] = nd.getPerson().getGender();
+						obj[0][3] = nd.getPerson().getAge();
+						String[] columnNames = { "Key", "Name", "Gender", "Age" };
+						table_1 = new JTable(obj, columnNames);
+						int colunms = table_1.getColumnCount();
+						TableColumn column = null;
+						for (int i = 0; i < colunms; i++) {
+							column = table_1.getColumnModel().getColumn(i);
+							column.setPreferredWidth(100);
+						}
+						JScrollPane scrollPane = new JScrollPane(table_1, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+								ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+						scrollPane.setBorder(BorderFactory.createTitledBorder(lineBorder, "Binarry Tree Storage"));
+						scrollPane.setBounds(32, 23, 400, 302);
+						contentPane.add(scrollPane);
 					}
-					JScrollPane scrollPane = new JScrollPane(table_1, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-							ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-					scrollPane.setBorder(BorderFactory.createTitledBorder(lineBorder, "Binarry Tree Storage"));
-					scrollPane.setBounds(32, 23, 400, 450);
-					contentPane.add(scrollPane);
+					
 				} else {
 					setTable();
 				}
@@ -207,7 +212,7 @@ public class BTS extends JFrame {
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(BorderFactory.createTitledBorder(lineBorder, "Iterator"));
 		panel_2.setBackground(SystemColor.menu);
-		panel_2.setBounds(32, 374, 829, 156);
+		panel_2.setBounds(32, 345, 829, 156);
 		contentPane.add(panel_2);
 
 		JButton btnCalculate = new JButton("Calculate");
@@ -226,8 +231,8 @@ public class BTS extends JFrame {
 		});
 		panel_2.setLayout(new GridLayout(0, 3, 0, 0));
 
-		JLabel lblNodeamount = new JLabel("NodeAmount :");
-		lblNodeamount.setFont(new Font("Meiryo", Font.PLAIN, 32));
+		JLabel lblNodeamount = new JLabel("  NodeAmount :");
+		lblNodeamount.setFont(new Font("Meiryo", Font.PLAIN, 18));
 		panel_2.add(lblNodeamount);
 
 		detailNumField = new JTextField();
@@ -236,8 +241,8 @@ public class BTS extends JFrame {
 		panel_2.add(detailNumField);
 		panel_2.add(btnCalculate);
 
-		JLabel lblAvgageofnodes = new JLabel("AvgAge :");
-		lblAvgageofnodes.setFont(new Font("Meiryo", Font.PLAIN, 32));
+		JLabel lblAvgageofnodes = new JLabel("  AvgAge :");
+		lblAvgageofnodes.setFont(new Font("Meiryo", Font.PLAIN, 18));
 		panel_2.add(lblAvgageofnodes);
 
 		avgAgeField = new JTextField();
@@ -255,8 +260,8 @@ public class BTS extends JFrame {
 				while (node.hasNext()) {
 					sum++;
 					Node n = (Node) node.next();
-					ageSum += n.readAge();
-					System.out.println("age: " + n.readAge());
+					ageSum += n.getPerson().getAge();
+					System.out.println("age: " + n.getPerson().getAge());
 				}
 				sum--;
 				tree.setCursor(-1);
@@ -266,6 +271,15 @@ public class BTS extends JFrame {
 			}
 		});
 		setTable();
+		JButton btn = new JButton("Back");
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menu.setVisible(true);
+				BTS.this.setVisible(false);
+			}
+		});
+		btn.setBounds(295, 522, 257, 40);
+		contentPane.add(btn);
 
 	}
 
@@ -281,13 +295,13 @@ public class BTS extends JFrame {
 						obj[i][j] = tree.search(keyArray[i]).readKey();
 						break;
 					case 1:
-						obj[i][j] = tree.search(keyArray[i]).readName();
+						obj[i][j] = tree.search(keyArray[i]).getPerson().getName();
 						break;
 					case 2:
-						obj[i][j] = tree.search(keyArray[i]).readGender();
+						obj[i][j] = tree.search(keyArray[i]).getPerson().getGender();
 						break;
 					case 3:
-						obj[i][j] = tree.search(keyArray[i]).readAge();
+						obj[i][j] = tree.search(keyArray[i]).getPerson().getAge();
 						break;
 					}
 				}
@@ -308,5 +322,6 @@ public class BTS extends JFrame {
 		scrollPane.setBorder(BorderFactory.createTitledBorder(lineBorder, "Binarry Tree Storage"));
 		scrollPane.setBounds(32, 23, 400, 302);
 		contentPane.add(scrollPane);
+		
 	}
 }

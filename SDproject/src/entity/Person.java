@@ -7,7 +7,6 @@ public class Person {
 		this.gender = gender2.charAt(0);
 	}
 
-
 	public String getName() {
 		return name;
 	}

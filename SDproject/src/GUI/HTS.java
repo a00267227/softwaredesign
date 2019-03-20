@@ -52,8 +52,7 @@ public class HTS extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HTS frame = new HTS();
-					frame.setVisible(true);
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,12 +62,15 @@ public class HTS extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * 
+	 * @param menu
 	 */
-	public HTS() {
+	public HTS(JFrame menu) {
+		super("Hash Table Search Book");
 		lineBorder = BorderFactory.createEtchedBorder(15, Color.RED, Color.black);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 889, 587);
+		setBounds(100, 100, 889, 619);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -157,26 +159,34 @@ public class HTS extends JFrame {
 		JButton button_1 = new JButton("Search");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				HNode node = htable.search(Integer.parseInt(IDField.getText()));
-				steps1.setText("1");
-				Object[][] obj = new Object[htable.readNodeNum()][6];
-				obj[0][0] = node.readKey();
-				obj[0][1] = node.getPerson().getName();
-				obj[0][2] = node.getPerson().getGender();
-				obj[0][3] = node.getPerson().getAge();
-				String[] columnNames = { "Key", "Name", "Gender", "Age" };
-				table_1 = new JTable(obj, columnNames);
-				int colunms = table_1.getColumnCount();
-				TableColumn column = null;
-				for (int i = 0; i < colunms; i++) {
-					column = table_1.getColumnModel().getColumn(i);
-					column.setPreferredWidth(100);
+				if (IDField.getText().length() != 0) {
+					HNode node = htable.search(Integer.parseInt(IDField.getText()));
+					if (node == null) {
+						steps1.setText("Cannot Found");
+					} else {
+						Object[][] obj = new Object[htable.readNodeNum()][6];
+						obj[0][0] = node.readKey();
+						obj[0][1] = node.getPerson().getName();
+						obj[0][2] = node.getPerson().getGender();
+						obj[0][3] = node.getPerson().getAge();
+						String[] columnNames = { "Key", "Name", "Gender", "Age" };
+						table_1 = new JTable(obj, columnNames);
+						int colunms = table_1.getColumnCount();
+						TableColumn column = null;
+						for (int i = 0; i < colunms; i++) {
+							column = table_1.getColumnModel().getColumn(i);
+							column.setPreferredWidth(100);
+						}
+						JScrollPane scrollPane = new JScrollPane(table_1,
+								ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+								ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+						scrollPane.setBorder(BorderFactory.createTitledBorder(lineBorder, "Binarry Tree Storage"));
+						scrollPane.setBounds(10, 39, 400, 302);
+						contentPane.add(scrollPane);
+					}
+				} else {
+					setTable();
 				}
-				JScrollPane scrollPane = new JScrollPane(table_1, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-						ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				scrollPane.setBorder(BorderFactory.createTitledBorder(lineBorder, "Binarry Tree Storage"));
-				scrollPane.setBounds(10, 39, 400, 302);
-				contentPane.add(scrollPane);
 			}
 		});
 		button_1.setBounds(287, 18, 92, 36);
@@ -209,9 +219,9 @@ public class HTS extends JFrame {
 		contentPane.add(panel_2);
 		panel_2.setLayout(new GridLayout(0, 3, 0, 0));
 
-		JLabel label_7 = new JLabel("NodeAmount :");
-		label_7.setFont(new Font("Meiryo", Font.PLAIN, 32));
-		panel_2.add(label_7);
+		JLabel lblNodeamount = new JLabel("  NodeAmount :");
+		lblNodeamount.setFont(new Font("Meiryo", Font.PLAIN, 18));
+		panel_2.add(lblNodeamount);
 
 		detailNumField = new JTextField();
 		detailNumField.setEditable(false);
@@ -234,9 +244,9 @@ public class HTS extends JFrame {
 		});
 		panel_2.add(button_2);
 
-		JLabel label_8 = new JLabel("AvgAge :");
-		label_8.setFont(new Font("Meiryo", Font.PLAIN, 32));
-		panel_2.add(label_8);
+		JLabel lblAvgage = new JLabel("  AvgAge :");
+		lblAvgage.setFont(new Font("Meiryo", Font.PLAIN, 18));
+		panel_2.add(lblAvgage);
 
 		avgAgeField = new JTextField();
 		avgAgeField.setEditable(false);
@@ -266,6 +276,15 @@ public class HTS extends JFrame {
 		});
 		panel_2.add(button_3);
 		setTable();
+		JButton btn = new JButton("Back");
+		btn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HTS.this.setVisible(false);
+				menu.setVisible(true);
+			}
+		});
+		btn.setBounds(285, 531, 257, 40);
+		contentPane.add(btn);
 	}
 
 	public void setTable() {
@@ -306,5 +325,6 @@ public class HTS extends JFrame {
 		scrollPane.setBorder(BorderFactory.createTitledBorder(lineBorder, "Hash Table Storage"));
 		scrollPane.setBounds(10, 39, 400, 302);
 		contentPane.add(scrollPane);
+
 	}
 }

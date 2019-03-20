@@ -1,19 +1,9 @@
 package entity;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
-public class BSTree implements MyIterator,Iterator{
-	public int getCursor() {
-		return cursor;
-	}
-
-	public void setCursor(int cursor) {
-		this.cursor = cursor;
-	}
+public class BSTree implements MyIterator, Iterator {
 
 	private Node head;
 	private Node tail;
@@ -27,8 +17,8 @@ public class BSTree implements MyIterator,Iterator{
 
 	public BSTree() {
 		tree = this;
-		tail = new Node(0, null, 0, 't', null, null);
-		head = new Node(-1, "head", 0, 'N', null, tail);
+		tail = new Node(0, null, 0, 'T', null, null);
+		head = new Node(-1, "head", 0, 'H', null, tail);
 		nodeNum = 0;
 		created = true;
 		nodes.add(head);
@@ -46,9 +36,9 @@ public class BSTree implements MyIterator,Iterator{
 			step++;
 		}
 		x = new Node(k, nm, a, g, tail, tail);
-		if(step == 0) {
+		if (step == 0) {
 			p.right = x;
-		}else {
+		} else {
 			if (k < p.key)
 				p.left = x;
 			else
@@ -77,7 +67,7 @@ public class BSTree implements MyIterator,Iterator{
 		else
 			return x;
 	}
-	
+
 	public int searchSteps(int k) {
 		int steps = 0;
 		Node x = head.right;
@@ -94,57 +84,23 @@ public class BSTree implements MyIterator,Iterator{
 		}
 		return steps;
 	}
-	
 
 	public int readNodeNum() {
 		return nodeNum;
 	}
 
 	public static BSTree getInstance() {
-		if (!created) {
-			tree = new BSTree();
-		}
-		return tree;
-
+		return 	tree = new BSTree();
 	}
 
-	public Node preSearch(int key) {
-		Queue<Node> queue = new LinkedList<Node>();
-		queue.add(this.head);
-		while (!queue.isEmpty()) {
-			Node cur = queue.poll();
-			int temp = cur.readKey();
-			if (cur.left != null) {
-				if(temp==key) return cur;
-				queue.add(cur.left);
-			}
-			if (cur.right != null) {
-				if(temp==key) return cur;
-				queue.add(cur.right);
-			}
-		}
-		return null;
-	}
-	
-	public String inSearchAvgAge() {
-		double sum = 0;
-		Queue<Node> queue = new LinkedList<Node>();
-		queue.add(this.head);
-		Node cur = queue.poll();
-		while(!queue.isEmpty() || cur != null) {
-			while(cur != null) {
-				sum += cur.readAge();
-				queue.add(cur);
-				cur = cur.left;
-			}
-			Node last = queue.poll();
-			cur = last.right;
-		}
-		DecimalFormat df = new DecimalFormat("#.00");
-		return df.format(sum/this.readNodeNum());
+	public int getCursor() {
+		return cursor;
 	}
 
-	
+	public void setCursor(int cursor) {
+		this.cursor = cursor;
+	}
+
 	@Override
 	public Iterator iterator() {
 		return this;
@@ -152,7 +108,7 @@ public class BSTree implements MyIterator,Iterator{
 
 	@Override
 	public boolean hasNext() {
-		return cursor+1<nodes.size();
+		return cursor + 1 < nodes.size();
 	}
 
 	@Override
@@ -160,6 +116,5 @@ public class BSTree implements MyIterator,Iterator{
 		cursor++;
 		return nodes.get(cursor);
 	}
-	
-	
+
 }
