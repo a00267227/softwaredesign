@@ -6,11 +6,11 @@ public class HashTable implements MyIterator, Iterator {
 	private int nodeNum;
 	private static boolean created = false;
 	private static HashTable table;
-	private int keyarr[] = new int[25];
+	private int keyarr[] = new int[300];
 	int temp = 0;
-	private HNode[] head = new HNode[25];
+	private HNode[] head = new HNode[300];
 	public int hash(int key) {
-		return key % 25;
+		return key % 20;
 	}
 
 	
@@ -44,6 +44,23 @@ public class HashTable implements MyIterator, Iterator {
 		}
 		return temp;
 	}
+	
+	public int searchSteps(int k) {
+		int num = 0;
+		int index = hash(k);
+		HNode temp = head[index];
+		boolean found = false;
+		while (temp != null && found == false) {
+			if (temp.key == k) {
+				found = true;
+				break;
+			}
+			temp = temp.next;
+			num++;
+		}
+		return num;
+	}
+	
 
 	public int readNodeNum() {
 		return nodeNum;
@@ -81,4 +98,5 @@ public class HashTable implements MyIterator, Iterator {
 	public Iterator iterator() {
 		return this;
 	}
+	
 }

@@ -12,7 +12,6 @@ public class HNode {
 	public HNode(int k, Person p) {
 		person = new Person(p.getName(), "" + p.getAge(), "" + p.getGender());
 		key = k;
-		next = null;
 	}
 
 	public int readKey() {

@@ -41,7 +41,7 @@ public class HTS extends JFrame {
 	private Border lineBorder;
 	private JTextField detailNumField;
 	private JTextField avgAgeField;
-	private int[] keyArray = new int[20];
+	private int[] keyArray = new int[200];
 	private int count = 0;
 	private JTable table_1;
 
@@ -165,6 +165,7 @@ public class HTS extends JFrame {
 						steps1.setText("Cannot Found");
 					} else {
 						Object[][] obj = new Object[htable.readNodeNum()][6];
+						steps1.setText(""+htable.searchSteps(Integer.parseInt(IDField.getText())));
 						obj[0][0] = node.readKey();
 						obj[0][1] = node.getPerson().getName();
 						obj[0][2] = node.getPerson().getGender();
